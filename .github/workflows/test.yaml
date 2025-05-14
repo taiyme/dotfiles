@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  testing:
+    name: Testing
+    runs-on: ${{ matrix.value.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        value:
+          - os: macos-13 # Intel
+          - os: macos-14 # arm64
+          - os: macos-15 # arm64
+    steps:
+      - name: Run chezmoi init
+        shell: zsh {0}
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- init \
+          ${{ github.repository }} \
+          --apply \
+          --verbose \
+          --no-tty
