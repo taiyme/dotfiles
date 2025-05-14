@@ -1,0 +1,115 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+format = """
+[](fg:red)\
+$os\
+$username\
+[](bg:peach fg:red)\
+$directory\
+[](bg:yellow fg:peach)\
+$git_branch\
+[](bg:green fg:yellow)\
+$nodejs\
+[](bg:sapphire fg:green)\
+[](bg:lavender fg:sapphire)\
+[](fg:lavender)\
+$fill\
+$cmd_duration\
+$status\
+$line_break\
+$character\
+"""
+
+right_format = ""
+
+palette = "catppuccin_mocha"
+
+[os]
+disabled = false
+style = "bg:red fg:crust"
+format = "[$symbol]($style)"
+
+[os.symbols]
+Macos = "󰀵"
+
+[username]
+disabled = false
+show_always = true
+style_user = "bg:red fg:crust"
+style_root = "bg:red fg:crust"
+format = "([ $user ]($style))"
+
+[directory]
+style = "bg:peach fg:crust"
+format = "([ $path( $read_only) ]($style))"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = "󰌾"
+
+[git_branch]
+disabled = false
+symbol = ""
+style = "bg:yellow fg:crust"
+format = "([ $symbol $branch(:$remote_branch) ]($style))"
+
+[fill]
+disabled = false
+symbol = " "
+
+[nodejs]
+disabled = false
+symbol = ""
+style = "bg:green fg:crust"
+format = "([ $symbol( $version) ]($style))"
+
+[cmd_duration]
+disabled = false
+min_time = 1000
+show_milliseconds = true
+style = "italic fg:subtext0"
+format = "( [\\(took $duration\\)]($style))"
+
+[status]
+disabled = false
+failure_style = "italic fg:red"
+format = "( [\\(exit $status\\)]($style))"
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = "[](bold fg:green)"
+error_symbol = "[](bold fg:green)"
+vimcmd_symbol = "[](bold fg:green)"
+vimcmd_replace_one_symbol = "[](bold fg:lavender)"
+vimcmd_replace_symbol = "[](bold fg:lavender)"
+vimcmd_visual_symbol = "[](bold fg:yellow)"
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

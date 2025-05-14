@@ -1,0 +1,23 @@
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+theme = catppuccin-mocha
+background-opacity = 0.95
+
+font-family = HackGen Console NF
+font-feature = -calt, -liga, -dlig
+font-size = 14
+
+cursor-style = bar
+cursor-style-blink = false
+
+window-width = 79
+window-height = 24
+window-padding-x = 6
+window-padding-y = 3
+
+quit-after-last-window-closed = true
+
+macos-titlebar-proxy-icon = hidden
+
+auto-update = off

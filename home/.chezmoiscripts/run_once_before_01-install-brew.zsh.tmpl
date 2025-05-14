@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+{{ $brew_path := "" -}}
+{{ if eq .chezmoi.arch "arm64" -}}
+  {{ $brew_path = "/opt/homebrew/bin/brew" -}}
+{{ else -}}
+  {{ $brew_path = "/usr/local/bin/brew" -}}
+{{ end -}}
+
+if command -v {{ $brew_path }} &>/dev/null; then
+  echo '[install-brew] Homebrewは既にインストールされています。'
+else
+  echo '[install-brew] Homebrewをインストールします...'
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi

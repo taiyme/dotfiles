@@ -1,0 +1,8 @@
+{{ $github_username := promptStringOnce . "github_username" "Enter your GitHub.com username" -}}
+{{ $git_user_name := promptStringOnce . "git_user_name" "Enter your Git user.name" -}}
+{{ $git_user_email := promptStringOnce . "git_user_email" "Enter your Git user.email" -}}
+
+[data]
+  github_username = {{ $github_username | quote }}
+  git_user_name = {{ $git_user_name | quote }}
+  git_user_email = {{ $git_user_email | quote }}

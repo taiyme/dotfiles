@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+# PATH
+typeset -Ug path PATH fpath FPATH
+path=(
+  ${HOME}/.local/bin(N-/)
+  /usr/local/sbin(N-/)
+  /usr/local/bin(N-/)
+  $path
+)
+
+# XDG
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+# Language
+export LANGUAGE="en_US.UTF-8"
+export LANG="$LANGUAGE"
+export LC_ALL="$LANGUAGE"
+export LC_CTYPE="$LANGUAGE"
+
+# Editor
+export EDITOR="nano"
+export CVSEDITOR="$EDITOR"
+export SVN_EDITOR="$EDITOR"
+export GIT_EDITOR="$EDITOR"

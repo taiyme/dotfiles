@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+# Sheldon
+if command -v sheldon &>/dev/null; then
+  sheldon_cache_file="${XDG_CACHE_HOME}/sheldon/plugins.zsh"
+  sheldon_config_file="${XDG_CONFIG_HOME}/sheldon/plugins.toml"
+  if [[ ! -r "$sheldon_cache_file" || "$sheldon_config_file" -nt "$sheldon_cache_file" ]]; then
+    mkdir -p "${XDG_CACHE_HOME}/sheldon"
+    sheldon source > "$sheldon_cache_file"
+  fi
+  source "$sheldon_cache_file"
+  unset sheldon_cache_file sheldon_config_file
+fi
+
+# History
+export HISTFILE="${XDG_STATE_HOME}/zsh/history"
+export HISTFILESIZE=100000
+export HISTSIZE=100000
+export SAVEHIST=100000
+setopt extended_history
+setopt hist_expand
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+setopt share_history
+
+# Other
+export LISTMAX=50
+export WORDCHARS="${WORDCHARS/\//}"
+setopt list_packed
+unsetopt beep
+unsetopt bg_nice
+unsetopt list_types

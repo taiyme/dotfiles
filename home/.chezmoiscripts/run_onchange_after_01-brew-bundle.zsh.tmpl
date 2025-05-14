@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+# dot_Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
+
+echo '[brew-bundle] 必要なパッケージをインストールします...'
+
+brew bundle --file="${HOME}/.Brewfile" --force
+brew bundle cleanup --file="${HOME}/.Brewfile" --force
