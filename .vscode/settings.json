@@ -3,6 +3,7 @@
     "**/*.{,z}sh.tmpl": "shellscript",
     "**/*.yml.tmpl": "yaml",
     "**/*.toml.tmpl": "toml",
+    "**/*.age": "plaintext",
     "**/.chezmoi{ignore,root}": "plaintext",
     "**/dot_Brewfile": "ruby",
     "**/dot_config/ghostty/config{,.tmpl}": "properties",
@@ -10,6 +11,6 @@
     "**/dot_config/git/ignore{,.tmpl}": "ignore",
     "**/dot_config/mise/config.lock{,.tmpl}": "toml",
     "**/dot_{zprofile,zshenv,zshrc}{,.tmpl}": "shellscript",
-    "**/private_dot_ssh/private_config{,.tmpl}": "plaintext",
+    "**/private_dot_ssh/**/*": "plaintext",
   },
 }

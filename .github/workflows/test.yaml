@@ -23,6 +23,15 @@ jobs:
           - os: macos-14 # arm64
           - os: macos-15 # arm64
     steps:
+      - name: Load AGE_SECRET_KEY
+        shell: zsh {0}
+        run: |
+          mkdir -p "${HOME}/.config/chezmoi"
+          echo "$AGE_SECRET_KEY" | base64 -d > "${HOME}/.config/chezmoi/key.txt"
+          chmod 600 "${HOME}/.config/chezmoi/key.txt"
+        env:
+          AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
+
       - name: Run chezmoi init
         shell: zsh {0}
         run: |

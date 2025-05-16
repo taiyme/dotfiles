@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # ssh-agent
-ssh-add --apple-load-keychain ~/.ssh/identity &>/dev/null || true
+ssh-add --apple-load-keychain ~/.ssh/keys/identity &>/dev/null || true
 
 # Homebrew
 {{ $brew_path := "" -}}

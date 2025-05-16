@@ -1,8 +1,10 @@
-# OrbStack
 Include ~/.orbstack/ssh/config
 
-# GitHub
-Host github.com
+Include ~/.ssh/conf.d/*
+
+Host *
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityFile ~/.ssh/identity
+  TCPKeepAlive yes
+  ServerAliveInterval 60
+  ServerAliveCountMax 5

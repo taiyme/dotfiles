@@ -1,3 +1,4 @@
+brew "age"
 brew "chezmoi"
 brew "ffmpeg"
 brew "gh"

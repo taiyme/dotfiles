@@ -12,6 +12,12 @@
   {{ $git_user_email = "41898282+github-actions[bot]@users.noreply.github.com" -}}
 {{ end -}}
 
+encryption = "age"
+
+[age]
+  identity = "~/.config/chezmoi/key.txt"
+  recipient = "age1qj0ul2m4gredc5y4rtw2cqtmqfqmlys49mkz4wfgf4rwxjlypgfs684ufq"
+
 [data]
   github_username = {{ $github_username | quote }}
   git_user_name = {{ $git_user_name | quote }}
