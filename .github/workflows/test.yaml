@@ -38,3 +38,5 @@ jobs:
           ${{ github.repository }} \
           --apply \
           --no-tty
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
