@@ -20,7 +20,6 @@ jobs:
       matrix:
         value:
           - os: macos-13 # Intel
-          - os: macos-14 # arm64
           - os: macos-15 # arm64
     steps:
       - name: Load AGE_SECRET_KEY
@@ -38,5 +37,4 @@ jobs:
           sh -c "$(curl -fsLS get.chezmoi.io)" -- init \
           ${{ github.repository }} \
           --apply \
-          --verbose \
           --no-tty
