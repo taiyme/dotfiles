@@ -1,8 +1,5 @@
 #!/bin/zsh
 
-# ssh-agent
-ssh-add --apple-load-keychain ~/.ssh/keys/identity &>/dev/null || true
-
 # Homebrew
 {{ $brew_path := "" -}}
 {{ if eq .chezmoi.arch "arm64" -}}
@@ -14,6 +11,9 @@ ssh-add --apple-load-keychain ~/.ssh/keys/identity &>/dev/null || true
 if command -v {{ $brew_path }} &>/dev/null; then
   eval "$({{ $brew_path }} shellenv)"
 fi
+
+# SSH agent
+ssh-add --apple-load-keychain &>/dev/null || true
 
 # OrbStack
 source ~/.orbstack/shell/init.zsh 2>/dev/null || true
