@@ -21,3 +21,6 @@ quit-after-last-window-closed = true
 macos-titlebar-proxy-icon = hidden
 
 auto-update = off
+
+keybind = ctrl+i=text:\t
+keybind = ctrl+m=text:\r
