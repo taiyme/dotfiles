@@ -1,19 +1,30 @@
 #!/bin/zsh
 
+# XDG Base Directory
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_BIN_HOME="${HOME}/.local/bin"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_RUNTIME_DIR="${TMPDIR%/}/xdgruntime-${UID}"
+
+# Not using XDG by default
+# Manually configured -- zsh, node, npm, starship
+# Not configured yet -- gnupg, docker, orbstack
+export NODE_REPL_HISTORY="${XDG_STATE_HOME}/node/repl_history"
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
+export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}/npm"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/rc"
+export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/config.toml"
+
 # PATH
 typeset -Ug path PATH fpath FPATH
 path=(
-  ${HOME}/.local/bin(N-/)
+  ${XDG_BIN_HOME}(N-/)
   /usr/local/sbin(N-/)
   /usr/local/bin(N-/)
   $path
 )
-
-# XDG
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_STATE_HOME="${HOME}/.local/state"
 
 # Language
 export LANGUAGE="en_US.UTF-8"
