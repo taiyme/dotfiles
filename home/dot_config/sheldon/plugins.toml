@@ -1,29 +1,35 @@
 shell = "zsh"
 
 [templates]
-defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
 
 [plugins]
 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
-[plugins.zsh-autosuggestions]
-github = "zsh-users/zsh-autosuggestions"
-apply = ["defer"]
+[plugins.starship]
+inline = "eval \"$(starship init zsh)\""
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
 
+[plugins.mise]
+inline = "eval \"$(mise activate zsh)\""
+
 [plugins.zsh-autocomplete]
 github = "marlonrichert/zsh-autocomplete"
+
+[plugins.compinit]
+inline = """
+autoload -Uz compinit
+zsh-defer -a -t0.01 compinit -d "${XDG_STATE_HOME}/zsh/zcompdump"
+"""
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 apply = ["defer"]
-
-[plugins.mise]
-inline = "eval \"$(mise activate zsh)\""
-
-[plugins.starship]
-inline = "eval \"$(starship init zsh)\""
