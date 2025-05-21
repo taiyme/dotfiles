@@ -8,3 +8,4 @@ Host *
   TCPKeepAlive yes
   ServerAliveInterval 60
   ServerAliveCountMax 5
+  SetEnv TERM=xterm-256color
