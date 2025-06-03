@@ -27,7 +27,23 @@ export HISTFILE="${XDG_STATE_HOME}/zsh/history"
 export HISTFILESIZE=100000
 export HISTSIZE=100000
 export SAVEHIST=100000
+
+# Other
+export LISTMAX=0
+export WORDCHARS="${WORDCHARS/\//}"
+
+# Zsh options
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_minus
+setopt pushd_ignore_dups
+
+unsetopt list_beep
+setopt list_packed
+unsetopt list_types
+
 setopt extended_history
+unsetopt hist_beep
 setopt hist_expand
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
@@ -38,10 +54,6 @@ setopt hist_save_no_dups
 setopt hist_verify
 setopt share_history
 
-# Other
-export LISTMAX=50
-export WORDCHARS="${WORDCHARS/\//}"
-setopt list_packed
-unsetopt beep
 unsetopt bg_nice
-unsetopt list_types
+
+unsetopt beep
