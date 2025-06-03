@@ -12,6 +12,16 @@ if command -v sheldon &>/dev/null; then
   unset sheldon_cache_file sheldon_config_file
 fi
 
+# Editor
+export EDITOR="nano"
+export VISUAL="$EDITOR"
+
+# Pager
+export PAGER="bat --paging=always"
+export BAT_PAGER="less"
+export LESS="-RFMSWi -#4"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+
 # History
 export HISTFILE="${XDG_STATE_HOME}/zsh/history"
 export HISTFILESIZE=100000
