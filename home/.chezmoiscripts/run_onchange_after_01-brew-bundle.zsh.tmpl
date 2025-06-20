@@ -4,5 +4,12 @@
 
 echo '[brew-bundle] 必要なパッケージをインストールします...'
 
-brew bundle --file="${HOME}/.Brewfile" --force
-brew bundle cleanup --file="${HOME}/.Brewfile" --force
+brewfile="${HOME}/.Brewfile"
+
+{{ if eq (env "CI") "true" -}}
+export HOMEBREW_BUNDLE_BREW_SKIP="mas"
+export HOMEBREW_BUNDLE_MAS_SKIP="$(cat "$brewfile" | grep '^mas ' | awk -F 'id: ' '{print $2}' | tr '\n' ' ')"
+{{ end -}}
+
+brew bundle --file="$brewfile" --force
+brew bundle cleanup --file="$brewfile" --force
