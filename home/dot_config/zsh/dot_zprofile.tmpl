@@ -12,8 +12,5 @@ if command -v {{ $brew_path }} &>/dev/null; then
   eval "$({{ $brew_path }} shellenv)"
 fi
 
-# SSH agent
-ssh-add --apple-load-keychain &>/dev/null || true
-
 # OrbStack
 source ~/.orbstack/shell/init.zsh 2>/dev/null || true

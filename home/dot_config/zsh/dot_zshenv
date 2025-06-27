@@ -30,3 +30,6 @@ path=(
 export LANGUAGE="en_US.UTF-8"
 export LANG="$LANGUAGE"
 export LC_ALL="$LANGUAGE"
+
+# Bitwarden SSH Agent
+export SSH_AUTH_SOCK="${HOME}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
