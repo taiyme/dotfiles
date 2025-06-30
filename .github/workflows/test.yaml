@@ -4,39 +4,71 @@ on:
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/test.yaml
+      - home/**/*
+
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - .github/workflows/test.yaml
+      - home/**/*
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
   cancel-in-progress: true
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
+  pre-checkout:
+    name: Pre checkout
+    uses: ./.github/workflows/pre-checkout.yaml
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+
   testing:
     name: Testing
     runs-on: ${{ matrix.value.os }}
+    timeout-minutes: 20
+    needs:
+      - pre-checkout
     strategy:
       fail-fast: false
       matrix:
         value:
           - os: macos-13 # Intel
           - os: macos-15 # arm64
-    steps:
-      - name: Load AGE_SECRET_KEY
+    defaults:
+      run:
         shell: zsh {0}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          ref: ${{ needs.pre-checkout.outputs.sha }}
+          fetch-depth: 1
+
+      - name: Set age secret key
+        env:
+          age_secret_key: ${{ secrets.AGE_SECRET_KEY }}
         run: |
           mkdir -p "${HOME}/.config/chezmoi"
-          echo "$AGE_SECRET_KEY" | base64 -d > "${HOME}/.config/chezmoi/key.txt"
+          echo "$age_secret_key" | base64 -d > "${HOME}/.config/chezmoi/key.txt"
           chmod 600 "${HOME}/.config/chezmoi/key.txt"
-        env:
-          AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
 
       - name: Run chezmoi init
-        shell: zsh {0}
+        env:
+          source_dir: ${{ github.workspace }}
         run: |
           sh -c "$(curl -fsLS get.chezmoi.io)" -- init \
-          ${{ github.repository }} \
-          --apply \
-          --no-tty
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            --apply \
+            --no-tty \
+            --source="$source_dir"
+
+      - name: Show installed tool versions
+        run: |
+          brew list --versions
+          mise list
