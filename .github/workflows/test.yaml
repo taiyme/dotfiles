@@ -40,6 +40,8 @@ jobs:
         value:
           - os: macos-13 # Intel
           - os: macos-15 # arm64
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     defaults:
       run:
         shell: zsh {0}
