@@ -35,6 +35,10 @@ apply = ["defer"]
 github = "zsh-users/zsh-autosuggestions"
 apply = ["defer"]
 
+[plugins.zsh-ni]
+github = "azu/ni.zsh"
+apply = ["defer"]
+
 [plugins.local-zsh-bindkey]
 local = "~/.config/zsh/plugins"
 apply = ["defer"]
