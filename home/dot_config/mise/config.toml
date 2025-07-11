@@ -5,9 +5,9 @@ lockfile = false
 pin = true
 
 [tools]
-bun = "1.2.17"
-deno = "2.3.7"
+bun = "1.2.18"
+deno = "2.4.1"
 node = "22.17.0"
 "npm:npm-check" = "6.0.1"
-"npm:pnpm" = "10.12.4"
+"npm:pnpm" = "10.13.1"
 usage = "2.1.1"
