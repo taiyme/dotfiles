@@ -5,7 +5,9 @@
     "schedule:weekly",
     ":pinAllExceptPeerDependencies"
   ],
+  "enabled": true,
   "automerge": false,
+  "platformAutomerge": false,
   "timezone": "Asia/Tokyo",
   "assignees": ["taiyme"],
   "reviewers": ["taiyme"],
@@ -14,19 +16,20 @@
   "prHourlyLimit": 0,
   "separateMajorMinor": true,
   "separateMultipleMajor": true,
-  "rebaseWhen": "never",
+  "rebaseWhen": "automerging",
   "ignoreDeps": ["ubuntu"],
   "packageRules": [
     {
-      "groupName": "ci dependencies (non-major)",
-      "groupSlug": "ci-deps-non-major",
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "ci dependencies (non-major)",
+      "automerge": true
     },
     {
-      "groupName": "mise dependencies",
-      "groupSlug": "mise-deps",
-      "matchManagers": ["mise"]
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "mise dependencies (non-major)",
+      "automerge": true
     }
   ]
 }
