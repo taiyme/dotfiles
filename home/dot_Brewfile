@@ -21,5 +21,6 @@ cask "google-chrome"
 cask "google-japanese-ime"
 cask "orbstack"
 cask "raycast"
+cask "spotify"
 cask "visual-studio-code"
 mas "Bitwarden", id: 1352778147
