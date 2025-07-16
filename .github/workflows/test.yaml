@@ -28,8 +28,8 @@ jobs:
     uses: ./.github/workflows/pre-checkout.yaml
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
 
-  testing:
-    name: Testing
+  test:
+    name: Test
     runs-on: ${{ matrix.value.os }}
     timeout-minutes: 20
     needs:
