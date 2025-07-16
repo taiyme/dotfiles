@@ -1,20 +1,28 @@
 [user]
 	name = {{ .git_user_name }}
 	email = {{ .git_user_email }}
-	signingkey = ~/.ssh/keys/github.pub
-[commit]
-	gpgsign = true
-[gpg]
-	format = ssh
-[fetch]
-	prune = true
-[core]
-	ignorecase = false
+	signingKey = ~/.ssh/keys/github.pub
+
 [init]
 	defaultBranch = main
+
+[core]
+	ignoreCase = false
+
+[commit]
+	gpgSign = true
+
+[gpg]
+	format = ssh
+
 [pull]
 	ff = only
+
 [merge]
 	ff = false
+
 [rebase]
-	autostash = true
+	autoStash = true
+
+[fetch]
+	prune = true
