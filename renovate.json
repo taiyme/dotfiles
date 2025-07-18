@@ -1,35 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices",
-    "schedule:weekly",
-    ":pinAllExceptPeerDependencies"
+    "github>taiyme/renovate-config",
+    ":assignAndReview(taiyme)"
   ],
-  "enabled": true,
-  "automerge": false,
-  "platformAutomerge": false,
-  "timezone": "Asia/Tokyo",
-  "assignees": ["taiyme"],
-  "reviewers": ["taiyme"],
-  "labels": ["renovate", "dependencies"],
-  "prConcurrentLimit": 0,
-  "prHourlyLimit": 0,
-  "separateMajorMinor": true,
-  "separateMultipleMajor": true,
-  "rebaseWhen": "automerging",
-  "ignoreDeps": ["ubuntu"],
   "packageRules": [
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "ci dependencies (non-major)",
-      "automerge": true
-    },
     {
       "matchManagers": ["mise"],
       "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "mise dependencies (non-major)",
-      "automerge": true
+      "groupName": "mise dependencies (non-major)"
     }
   ]
 }
