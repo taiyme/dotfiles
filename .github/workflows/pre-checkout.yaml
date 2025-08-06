@@ -7,14 +7,15 @@ on:
         value: ${{ jobs.checkout.outputs.sha }}
         description: Commit SHA
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   checkout:
     name: Checkout
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: read
     outputs:
       sha: ${{ steps.checkout.outputs.commit }}
     steps:

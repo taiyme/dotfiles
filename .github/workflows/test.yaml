@@ -16,22 +16,25 @@ on:
       - home/**/*
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   pre-checkout:
     name: Pre checkout
     uses: ./.github/workflows/pre-checkout.yaml
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
 
   test:
     name: Test
     runs-on: ${{ matrix.value.os }}
     timeout-minutes: 20
+    permissions:
+      contents: read
     needs:
       - pre-checkout
     strategy:
