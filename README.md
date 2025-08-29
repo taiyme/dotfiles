@@ -15,11 +15,14 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply taiyme
 ## メモ
 
 ```sh
-# .Brewfile を更新する
+# [Homebrew] .Brewfile を更新する
 brew bundle dump --file="$(chezmoi source-path)/dot_Brewfile" --no-vscode --force
 
-# brewでインストールしたやつ全部更新する
-brew upgrade --greedy && brew cleanup
+# [Homebrew] インストールしたやつ全部更新する
+brew upgrade --greedy && brew cleanup && mas upgrade
+
+# [Google日本語入力] 消えずに残った変換ウィンドウを消す
+kill -9 $(pgrep GoogleJapaneseInput)
 ```
 
 ## ライセンス
