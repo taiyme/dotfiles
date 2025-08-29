@@ -9,6 +9,7 @@ pin = true
 bun = "1.2.20"
 deno = "2.4.5"
 node = "22.18.0"
+"npm:@devcontainers/cli" = "0.80.0"
 "npm:npm-check" = "6.0.1"
 "npm:pnpm" = "10.15.0"
 usage = "2.2.2"
