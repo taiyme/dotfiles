@@ -1,7 +1,7 @@
 shell-integration = zsh
 shell-integration-features = no-cursor
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 background-opacity = 0.95
 
 font-family = HackGen Console NF
