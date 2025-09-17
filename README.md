@@ -22,7 +22,7 @@ brew bundle dump --file="$(chezmoi source-path)/dot_Brewfile" --no-vscode --forc
 brew upgrade --greedy && brew cleanup && mas upgrade
 
 # [Google日本語入力] 消えずに残った変換ウィンドウを消す
-kill -9 $(pgrep GoogleJapaneseInput)
+pkill GoogleJapaneseInput
 ```
 
 ## ライセンス
