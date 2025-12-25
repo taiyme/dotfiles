@@ -12,9 +12,6 @@ if command -v sheldon &>/dev/null; then
   unset sheldon_cache_file sheldon_config_file
 fi
 
-# Terminfo
-export TERM="xterm-256color"
-
 # Editor
 export EDITOR="nano"
 export VISUAL="$EDITOR"

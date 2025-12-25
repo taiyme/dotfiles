@@ -1,5 +1,5 @@
 shell-integration = zsh
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor, ssh-env, ssh-terminfo
 
 theme = Catppuccin Mocha
 background-opacity = 0.95
