@@ -1,0 +1,67 @@
+name: Status Check
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-
+    ${{ github.event.pull_request.head.repo.full_name || github.repository }}-
+    ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  status-check:
+    name: Status Check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      pull-requests: read
+      checks: read
+      statuses: read
+    steps:
+      - name: Watch PR checks
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          pr_number: ${{ github.event.number }}
+        run: |
+          while true; do
+
+            until checks_json="$( \
+              gh pr checks "$pr_number" \
+                --json bucket,name,workflow \
+                --jq 'map(select(.name != "Status Check"))' \
+            )"; do
+              sleep 30
+            done
+
+            checks_state="$(\
+              jq -cr '
+                {
+                  has_fail: any(.[]; .bucket == "fail" or .bucket == "cancel"),
+                  has_pending: any(.[]; .workflow != "" and .bucket == "pending"),
+                }
+                | if .has_fail then "fail"
+                  elif .has_pending then "pending"
+                  else "done"
+                  end
+              ' <<< "$checks_json" \
+            )"
+
+            case "$checks_state" in
+              fail)    exit 1 ;;
+              done)    exit 0 ;;
+              pending) sleep 15 ;;
+            esac
+
+          done

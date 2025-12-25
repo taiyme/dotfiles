@@ -8,7 +8,7 @@ on:
       - .github/workflows/test.yaml
       - home/**/*
 
-  pull_request_target:
+  pull_request:
     branches:
       - main
     paths:
@@ -16,44 +16,36 @@ on:
       - home/**/*
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: >-
+    ${{ github.workflow }}-
+    ${{ github.event.pull_request.head.repo.full_name || github.repository }}-
+    ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 permissions: {}
 
 jobs:
-  pre-checkout:
-    name: Pre checkout
-    uses: ./.github/workflows/pre-checkout.yaml
-    permissions:
-      contents: read
-    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
-
   test:
     name: Test
-    runs-on: ${{ matrix.value.os }}
+    runs-on: ${{ matrix.platform.runner }}
     timeout-minutes: 20
     permissions:
       contents: read
-    needs:
-      - pre-checkout
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
     strategy:
       fail-fast: false
       matrix:
-        value:
-          - os: macos-13 # Intel
-          - os: macos-15 # arm64
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        platform:
+          - runner: macos-15-intel
+          - runner: macos-15
     defaults:
       run:
         shell: zsh {0}
     steps:
       - name: Checkout
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
-          ref: ${{ needs.pre-checkout.outputs.sha }}
           fetch-depth: 1
 
       - name: Set age secret key
@@ -67,6 +59,7 @@ jobs:
       - name: Run chezmoi init
         env:
           source_dir: ${{ github.workspace }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sh -c "$(curl -fsLS get.chezmoi.io)" -- init \
             --apply \
@@ -74,6 +67,8 @@ jobs:
             --source="$source_dir"
 
       - name: Show installed tool versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           brew list --versions
           mise list
