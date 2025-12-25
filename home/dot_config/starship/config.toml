@@ -2,22 +2,20 @@
 
 format = """
 [](fg:red)\
-$os\
-$username\
-[](bg:peach fg:red)\
-$directory\
-[](bg:yellow fg:peach)\
-$git_branch\
-[](bg:green fg:yellow)\
-$nodejs\
-[](bg:sapphire fg:green)\
-[](bg:lavender fg:sapphire)\
+[$os$username](bg:red fg:crust)\
+[](fg:red bg:peach)\
+[$directory](bg:peach fg:crust)\
+[](fg:peach bg:yellow)\
+[$git_branch](bg:yellow fg:crust)\
+[](fg:yellow bg:green)\
+[$bun$nodejs](bg:green fg:crust)\
+[](fg:green bg:sapphire)\
+[$docker_context](bg:sapphire fg:crust)\
+[](fg:sapphire bg:lavender)\
+[$cmd_duration](bg:lavender fg:crust)\
 [](fg:lavender)\
-$fill\
-$cmd_duration\
-$status\
-$line_break\
-$character\
+$status
+$character \
 """
 
 right_format = ""
@@ -26,8 +24,7 @@ palette = "catppuccin_mocha"
 
 [os]
 disabled = false
-style = "bg:red fg:crust"
-format = "[$symbol]($style)"
+format = "$symbol"
 
 [os.symbols]
 Macos = "󰀵"
@@ -35,13 +32,10 @@ Macos = "󰀵"
 [username]
 disabled = false
 show_always = true
-style_user = "bg:red fg:crust"
-style_root = "bg:red fg:crust"
-format = "([ $user ]($style))"
+format = "( $user )"
 
 [directory]
-style = "bg:peach fg:crust"
-format = "([ $path( $read_only) ]($style))"
+format = "( $path( $read_only) )"
 truncation_length = 3
 truncation_symbol = "…/"
 read_only = "󰌾"
@@ -49,42 +43,55 @@ read_only = "󰌾"
 [git_branch]
 disabled = false
 symbol = ""
-style = "bg:yellow fg:crust"
-format = "([ $symbol $branch(:$remote_branch) ]($style))"
+format = "( $symbol $branch(:$remote_branch) )"
 
-[fill]
+[bun]
 disabled = false
-symbol = " "
+format = "( $symbol( $version) )"
 
 [nodejs]
 disabled = false
 symbol = ""
-style = "bg:green fg:crust"
-format = "([ $symbol( $version) ]($style))"
+format = "( $symbol( $version) )"
+
+[docker_context]
+disabled = false
+symbol = ""
+format = "( $symbol( $context) )"
+only_with_files = true
+detect_files = [
+  "Dockerfile",
+  "compose.yaml",
+  "compose.yml",
+  "docker-compose.yaml",
+  "docker-compose.yml",
+  ".devcontainer.json",
+  "devcontainer.json",
+]
+detect_folders = [
+  ".devcontainer",
+]
 
 [cmd_duration]
 disabled = false
 min_time = 1000
-show_milliseconds = true
-style = "italic fg:subtext0"
-format = "( [\\(took $duration\\)]($style))"
+show_milliseconds = false
+format = "( took $duration )"
 
 [status]
 disabled = false
-failure_style = "italic fg:red"
+failure_style = "fg:red"
 format = "( [\\(exit $status\\)]($style))"
-
-[line_break]
-disabled = false
 
 [character]
 disabled = false
-success_symbol = "[](bold fg:green)"
-error_symbol = "[](bold fg:green)"
-vimcmd_symbol = "[](bold fg:green)"
-vimcmd_replace_one_symbol = "[](bold fg:lavender)"
-vimcmd_replace_symbol = "[](bold fg:lavender)"
-vimcmd_visual_symbol = "[](bold fg:yellow)"
+success_symbol = "[>](bold fg:green)"
+error_symbol = "[>](bold fg:green)"
+vimcmd_symbol = "[<](bold fg:green)"
+vimcmd_replace_one_symbol = "[<](bold fg:lavender)"
+vimcmd_replace_symbol = "[<](bold fg:lavender)"
+vimcmd_visual_symbol = "[<](bold fg:yellow)"
+format = "$symbol"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
@@ -113,3 +120,288 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+
+[aws]
+disabled = true
+
+[azure]
+disabled = true
+
+[battery]
+disabled = true
+
+[buf]
+disabled = true
+
+# [bun]
+# disabled = true
+
+[c]
+disabled = true
+
+# [character]
+# disabled = true
+
+[cmake]
+disabled = true
+
+# [cmd_duration]
+# disabled = true
+
+[cobol]
+disabled = true
+
+[conda]
+disabled = true
+
+[container]
+disabled = true
+
+[cpp]
+disabled = true
+
+[crystal]
+disabled = true
+
+[daml]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[direnv]
+disabled = true
+
+# [docker_context]
+# disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[fennel]
+disabled = true
+
+[fill]
+disabled = true
+
+[fossil_branch]
+disabled = true
+
+[fossil_metrics]
+disabled = true
+
+[gcloud]
+disabled = true
+
+# [git_branch]
+# disabled = true
+
+[git_commit]
+disabled = true
+
+[git_metrics]
+disabled = true
+
+[git_state]
+disabled = true
+
+[git_status]
+disabled = true
+
+[gleam]
+disabled = true
+
+[golang]
+disabled = true
+
+[gradle]
+disabled = true
+
+[guix_shell]
+disabled = true
+
+[haskell]
+disabled = true
+
+[haxe]
+disabled = true
+
+[helm]
+disabled = true
+
+[hg_branch]
+disabled = true
+
+[hostname]
+disabled = true
+
+[java]
+disabled = true
+
+[jobs]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = true
+
+[localip]
+disabled = true
+
+[lua]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[meson]
+disabled = true
+
+[mise]
+disabled = true
+
+[mojo]
+disabled = true
+
+[nats]
+disabled = true
+
+[netns]
+disabled = true
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+# [nodejs]
+# disabled = true
+
+[ocaml]
+disabled = true
+
+[odin]
+disabled = true
+
+[opa]
+disabled = true
+
+[openstack]
+disabled = true
+
+# [os]
+# disabled = true
+
+[package]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pijul_channel]
+disabled = true
+
+[pixi]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+disabled = true
+
+[quarto]
+disabled = true
+
+[raku]
+disabled = true
+
+[red]
+disabled = true
+
+[rlang]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[scala]
+disabled = true
+
+[shell]
+disabled = true
+
+[shlvl]
+disabled = true
+
+[singularity]
+disabled = true
+
+[solidity]
+disabled = true
+
+[spack]
+disabled = true
+
+# [status]
+# disabled = true
+
+[sudo]
+disabled = true
+
+[swift]
+disabled = true
+
+[terraform]
+disabled = true
+
+[time]
+disabled = true
+
+[typst]
+disabled = true
+
+# [username]
+# disabled = true
+
+[vagrant]
+disabled = true
+
+[vcsh]
+disabled = true
+
+[vlang]
+disabled = true
+
+[zig]
+disabled = true
