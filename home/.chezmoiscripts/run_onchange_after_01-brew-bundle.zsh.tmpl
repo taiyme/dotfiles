@@ -12,4 +12,7 @@ export HOMEBREW_BUNDLE_MAS_SKIP="$(cat "$brewfile" | grep '^mas ' | awk -F 'id: 
 {{ end -}}
 
 brew bundle --file="$brewfile" --force
+
+{{ if ne (env "CI") "true" -}}
 brew bundle cleanup --file="$brewfile" --force
+{{ end -}}
