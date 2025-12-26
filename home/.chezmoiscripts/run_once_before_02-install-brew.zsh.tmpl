@@ -8,8 +8,8 @@
 {{ end -}}
 
 if command -v {{ $brew_path }} &>/dev/null; then
-  echo '[install-brew] Homebrewは既にインストールされています。'
+  print -P "✅ %F{green}Homebrewは既にインストールされています。%f"
 else
-  echo '[install-brew] Homebrewをインストールします...'
+  print -P "🔄 %F{blue}Homebrewをインストールします...%f"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi

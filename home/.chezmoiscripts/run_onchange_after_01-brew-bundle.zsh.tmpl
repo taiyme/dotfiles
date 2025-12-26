@@ -2,7 +2,7 @@
 
 # dot_Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
 
-echo '[brew-bundle] 必要なパッケージをインストールします...'
+print -P "🔄 %F{blue}Homebrewの依存関係をインストールします...%f"
 
 brewfile="${HOME}/.Brewfile"
 

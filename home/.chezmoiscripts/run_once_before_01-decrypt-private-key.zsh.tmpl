@@ -2,7 +2,7 @@
 
 if [[ ! -f "${HOME}/.config/chezmoi/key.txt" ]]; then
   mkdir -p "${HOME}/.config/chezmoi"
-  echo '[decrypt-private-key] 先に進むには、パスフレーズの入力が必要です。'
+  print -P "⚠️ %F{yellow}先に進むにはパスフレーズの入力が必要です。%f"
   chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/key.txt.age"
   chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
