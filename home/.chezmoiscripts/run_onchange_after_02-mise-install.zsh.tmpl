@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 # dot_config/mise/config.toml hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
 
 print -P "🔄 %F{blue}miseの依存関係をインストールします...%f"

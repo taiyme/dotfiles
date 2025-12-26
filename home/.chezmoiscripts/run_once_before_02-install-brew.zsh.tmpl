@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 {{ $brew_path := "" -}}
 {{ if eq .chezmoi.arch "arm64" -}}
   {{ $brew_path = "/opt/homebrew/bin/brew" -}}

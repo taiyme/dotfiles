@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 if [[ ! -f "${HOME}/.config/chezmoi/key.txt" ]]; then
   mkdir -p "${HOME}/.config/chezmoi"
   print -P "⚠️ %F{yellow}先に進むにはパスフレーズの入力が必要です。%f"
