@@ -1,29 +1,14 @@
 # taiyme/dotfiles
 
-[![Test](https://github.com/taiyme/dotfiles/actions/workflows/test.yaml/badge.svg)](https://github.com/taiyme/dotfiles/actions/workflows/test.yaml)
+[![Build](https://github.com/taiyme/dotfiles/actions/workflows/build.yaml/badge.svg)](https://github.com/taiyme/dotfiles/actions/workflows/build.yaml)
 [![License](https://img.shields.io/github/license/taiyme/dotfiles?style=flat)](./LICENSE)
 [![Donate](https://img.shields.io/badge/donate-%3C3-f96854?style=flat)](https://taiy.me/to/donate)
 
-taiyのためのdotfilesです。
+Nix Flakes で管理された、個人用・macOS向け dotfiles です。
 
-## 使い方
+## セットアップ
 
-```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply taiyme
-```
-
-## メモ
-
-```sh
-# [Homebrew] .Brewfile を更新する
-brew bundle dump --file="$(chezmoi source-path)/dot_Brewfile" --no-vscode --force
-
-# [Homebrew] インストールしたやつ全部更新する
-brew upgrade --greedy && brew cleanup && mas upgrade
-
-# [Google日本語入力] 消えずに残った変換ウィンドウを消す
-pkill GoogleJapaneseInput
-```
+[セットアップ ガイド](./docs/setup.md) を参照してください。
 
 ## ライセンス
 

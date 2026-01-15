@@ -1,0 +1,112 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/build.yaml
+      - flake.lock
+      - '**/*.nix'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/build.yaml
+      - flake.lock
+      - '**/*.nix'
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-
+    ${{ github.event.pull_request.head.repo.full_name || github.repository }}-
+    ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 360
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+          - macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@73327eb48f028efaaf5013656ba216ca3cdeca7b # v3.16.3
+        with:
+          extra-conf: |
+            extra-substituters = https://nix-cache.taiy.me
+            extra-trusted-substituters = https://nix-cache.taiy.me
+            extra-trusted-public-keys = nix-cache.taiy.me:Wv1ThvtQj0/bCIgCGYqWgRb49VGUuFmWtpUcc8Oqi+E=
+
+      - name: Generate attribute
+        run: |
+          FLAKE_SYSTEM="$(nix eval --raw --impure --expr "builtins.currentSystem")"
+          FLAKE_ATTRIBUTE="${GITHUB_WORKSPACE}#hydraJobs.${FLAKE_SYSTEM}"
+          echo "FLAKE_SYSTEM=${FLAKE_SYSTEM}" >> "$GITHUB_ENV"
+          echo "FLAKE_ATTRIBUTE=${FLAKE_ATTRIBUTE}" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: |
+          nix build \
+            --accept-flake-config \
+            --print-build-logs \
+            --print-out-paths \
+            --no-link \
+            -- "$FLAKE_ATTRIBUTE"
+
+      - name: Store paths
+        run: |
+          store_paths_file="$(mktemp "${RUNNER_TEMP}/store_paths_file.XXXXXX")"
+          nix path-info --recursive -- "$FLAKE_ATTRIBUTE" \
+            | sort -u \
+            > "$store_paths_file"
+          echo "store_paths_file=${store_paths_file}" >> "$GITHUB_ENV"
+
+      - name: Secret key
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        env:
+          NIX_CACHE_SECRET_KEY: ${{ secrets.NIX_CACHE_SECRET_KEY }}
+        run: |
+          secret_key_file="$(mktemp "${RUNNER_TEMP}/secret_key_file.XXXXXX")"
+          echo "$NIX_CACHE_SECRET_KEY" > "$secret_key_file"
+          echo "secret_key_file=${secret_key_file}" >> "$GITHUB_ENV"
+
+      - name: Sign store paths
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        run: |
+          xargs -r -n 100 \
+            nix store sign \
+            --key-file "$secret_key_file" \
+            -- \
+            < "$store_paths_file"
+
+      - name: Copy store paths
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_API_BUCKET: ${{ secrets.R2_API_BUCKET }}
+          R2_API_ENDPOINT: ${{ secrets.R2_API_ENDPOINT }}
+        run: |
+          xargs -r -n 100 \
+            nix copy \
+            --to "s3://${R2_API_BUCKET}?endpoint=${R2_API_ENDPOINT}&region=auto&compression=zstd&parallel-compression=true" \
+            -- \
+            < "$store_paths_file"
