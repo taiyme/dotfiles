@@ -4,6 +4,9 @@
     "github>taiyme/renovate-config",
     ":assignAndReview(taiyme)"
   ],
+  "nix": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchManagers": ["mise"],

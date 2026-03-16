@@ -1,16 +1,19 @@
 {
-  "files.associations": {
-    "**/*.{,z}sh.tmpl": "shellscript",
-    "**/*.yml.tmpl": "yaml",
-    "**/*.toml.tmpl": "toml",
-    "**/*.age": "plaintext",
-    "**/.chezmoi{ignore,root}": "plaintext",
-    "**/dot_Brewfile": "ruby",
-    "**/dot_config/ghostty/config{,.tmpl}": "properties",
-    "**/dot_config/git/config{,.tmpl}": "properties",
-    "**/dot_config/git/ignore{,.tmpl}": "ignore",
-    "**/dot_config/mise/config.lock{,.tmpl}": "toml",
-    "**/dot_{zprofile,zshenv,zshrc}{,.tmpl}": "shellscript",
-    "**/private_dot_ssh/**/*": "plaintext",
-  },
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd",
+  "nix.serverSettings": {
+    "nixd": {
+      "nixpkgs": {
+        "expr": "import (builtins.getFlake \"${workspaceFolder}\").inputs.nixpkgs { }"
+      },
+      "options": {
+        "darwin-m1mba": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options"
+        },
+        "darwin-m1mba-hm": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options.home-manager.users.type.getSubOptions []"
+        }
+      }
+    }
+  }
 }
