@@ -9,12 +9,7 @@ on:
       - synchronize
       - edited
 
-concurrency:
-  group: >-
-    ${{ github.workflow }}-
-    ${{ github.event.pull_request.head.repo.full_name || github.repository }}-
-    ${{ github.head_ref || github.run_id }}
-  cancel-in-progress: true
+# zizmor: ignore[concurrency-limits]
 
 permissions: {}
 
@@ -24,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
-      pull-requests: read
+      pull-requests: read # Required for 'Semantic PR title' step.
     steps:
       - name: Semantic PR title
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
