@@ -1,5 +1,9 @@
 {
   "nix.enableLanguageServer": true,
+  "nix.hiddenLanguageServerErrors": [
+    "textDocument/definition",
+    "textDocument/formatting"
+  ],
   "nix.serverPath": "nixd",
   "nix.serverSettings": {
     "nixd": {
@@ -7,11 +11,20 @@
         "expr": "import (builtins.getFlake \"${workspaceFolder}\").inputs.nixpkgs { }"
       },
       "options": {
-        "darwin-m1mba": {
+        "nixpkgs-lib": {
+          "expr": "{ lib = (builtins.getFlake \"${workspaceFolder}\").inputs.nixpkgs.lib; }"
+        },
+        "flake-parts": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").debug.options"
+        },
+        "flake-parts-perSystem": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").currentSystem.options"
+        },
+        "nix-darwin": {
           "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options"
         },
-        "darwin-m1mba-hm": {
-          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options.home-manager.users.type.getSubOptions []"
+        "home-manager": {
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options.home-manager.users.type.getSubOptions [ ]"
         }
       }
     }
