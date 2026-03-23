@@ -23,16 +23,21 @@
             "editor.tabSize" = 2;
             "editor.wordSegmenterLocales" = [ "ja-JP" ];
             "emmet.variables" = {
-              "charset" = "utf-8";
-              "lang" = "ja";
+              charset = "utf-8";
+              lang = "ja";
             };
             "explorer.compactFolders" = false;
+            "files.associations" = {
+              copying = "plaintext";
+              copyright = "plaintext";
+              license = "plaintext";
+            };
             "files.insertFinalNewline" = true;
             "github.copilot.enable" = {
               "*" = false;
-              "markdown" = false;
-              "plaintext" = false;
-              "scminput" = false;
+              markdown = false;
+              plaintext = false;
+              scminput = false;
             };
             "inlineChat.lineNaturalLanguageHint" = false;
             "search.showLineNumbers" = true;
@@ -58,9 +63,9 @@
             "docker.extension.enableComposeLanguageServer" = false;
             "gitlens.codeLens.enabled" = false;
             "gitlens.views.scm.grouped.hiddenViews" = {
-              "contributors" = true;
-              "repositories" = true;
-              "worktrees" = true;
+              contributors = true;
+              repositories = true;
+              worktrees = true;
             };
             "javascript.updateImportsOnFileMove.enabled" = "never";
             "redhat.telemetry.enabled" = false;
