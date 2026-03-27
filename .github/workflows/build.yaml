@@ -72,6 +72,7 @@ jobs:
             -- "$FLAKE_ATTRIBUTE"
 
       - name: Store paths
+        if: ${{ github.event_name == 'push' }}
         run: |
           store_paths_file="$(mktemp "${RUNNER_TEMP}/store_paths_file.XXXXXX")"
           nix path-info --recursive -- "$FLAKE_ATTRIBUTE" \
@@ -80,7 +81,7 @@ jobs:
           echo "store_paths_file=${store_paths_file}" >> "$GITHUB_ENV"
 
       - name: Secret key
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.event_name == 'push' }}
         env:
           NIX_CACHE_SECRET_KEY: ${{ secrets.NIX_CACHE_SECRET_KEY }}
         run: |
@@ -89,7 +90,7 @@ jobs:
           echo "secret_key_file=${secret_key_file}" >> "$GITHUB_ENV"
 
       - name: Sign store paths
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           xargs -r -n 100 \
             nix store sign \
@@ -98,7 +99,7 @@ jobs:
             < "$store_paths_file"
 
       - name: Copy store paths
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.event_name == 'push' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
