@@ -5,7 +5,7 @@ set -euo pipefail
 readonly REPO="taiyme/dotfiles"
 readonly REPO_BRANCH="main"
 readonly DOTFILES_DIR="${HOME}/.dotfiles"
-readonly FLAKE_HOST="m1mba"
+readonly FLAKE_HOST="taiy-m1mba"
 
 _info() {
   printf "\n[INFO] %s\n" "$1"

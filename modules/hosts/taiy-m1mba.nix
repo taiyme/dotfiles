@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  flake.modules.darwin."hosts/m1mba" =
+  flake.modules.darwin."hosts/taiy-m1mba" =
     { ... }:
     let
       darwinModules = config.flake.modules.darwin;

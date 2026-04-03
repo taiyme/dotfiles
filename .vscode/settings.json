@@ -21,10 +21,10 @@
           "expr": "(builtins.getFlake \"${workspaceFolder}\").currentSystem.options"
         },
         "nix-darwin": {
-          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options"
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.taiy-m1mba.options"
         },
         "home-manager": {
-          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.m1mba.options.home-manager.users.type.getSubOptions [ ]"
+          "expr": "(builtins.getFlake \"${workspaceFolder}\").darwinConfigurations.taiy-m1mba.options.home-manager.users.type.getSubOptions [ ]"
         }
       }
     }
