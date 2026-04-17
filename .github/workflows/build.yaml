@@ -33,6 +33,7 @@ jobs:
     timeout-minutes: 360
     permissions:
       contents: read
+    environment: production
     strategy:
       fail-fast: false
       matrix:
