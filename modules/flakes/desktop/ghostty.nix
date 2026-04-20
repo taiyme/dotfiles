@@ -7,6 +7,8 @@
       programs.ghostty = {
         enable = true;
 
+        # TODO: pkgs.ghostty が aarch64-darwin に対応していない
+        # package = pkgs.ghostty;
         package = pkgs.brewCasks.ghostty;
 
         enableZshIntegration = true;
