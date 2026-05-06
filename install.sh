@@ -4,8 +4,11 @@ set -euo pipefail
 
 readonly REPO="taiyme/dotfiles"
 readonly REPO_BRANCH="main"
-readonly DOTFILES_DIR="${HOME}/.dotfiles"
+readonly DOTFILES_DIR="$HOME/.dotfiles"
 readonly FLAKE_HOST="taiy-m1mba"
+
+readonly NIXPKGS_VERSION="nixpkgs-25.11-darwin"
+readonly NIXDARWIN_VERSION="nix-darwin-25.11"
 
 _info() {
   printf "\n[INFO] %s\n" "$1"
@@ -25,6 +28,8 @@ _ensure_homebrew() {
     _install_homebrew
   fi
 
+  _info "Homebrew のアップデートを確認します..."
+  /opt/homebrew/bin/brew update
   /opt/homebrew/bin/brew --version
 }
 
@@ -32,30 +37,33 @@ _install_determinate_nix() {
   _info "Determinate Nix をインストールします..."
   curl --proto '=https' --tlsv1.2 -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm
 
-  if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  if [[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
     # shellcheck disable=SC1091
-    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
   fi
 }
 
 _ensure_determinate_nix() {
-  if ! _command_exists nix; then
+  if ! _command_exists determinate-nixd || \
+    ! _command_exists nix; then
     _install_determinate_nix
   fi
 
+  _info "Determinate Nix のアップデートを確認します..."
+  sudo determinate-nixd upgrade
   nix --version
 }
 
 _fetch_dotfiles() {
   _git() {
-    nix run "nixpkgs/nixos-25.11#git" -- "$@"
+    nix run "nixpkgs/${NIXPKGS_VERSION}#git" -- "$@"
   }
 
-  if [[ -d "${DOTFILES_DIR}/.git" ]]; then
+  if [[ -d $DOTFILES_DIR && -d $DOTFILES_DIR/.git ]]; then
     _info "最新の内容を取得します..."
     _git -C "$DOTFILES_DIR" fetch origin "$REPO_BRANCH"
     _git -C "$DOTFILES_DIR" checkout "$REPO_BRANCH"
-    _git -C "$DOTFILES_DIR" rebase "origin/${REPO_BRANCH}"
+    _git -C "$DOTFILES_DIR" rebase "origin/$REPO_BRANCH"
   else
     _info "リポジトリをクローンします..."
     _git clone --branch "$REPO_BRANCH" "https://github.com/${REPO}.git" "$DOTFILES_DIR"
@@ -67,7 +75,7 @@ _apply_dotfiles() {
     if _command_exists darwin-rebuild; then
       sudo darwin-rebuild "$@"
     else
-      sudo nix run "nix-darwin/nix-darwin-25.11#darwin-rebuild" -- "$@"
+      sudo nix run "nix-darwin/${NIXDARWIN_VERSION}#darwin-rebuild" -- "$@"
     fi
   }
 
