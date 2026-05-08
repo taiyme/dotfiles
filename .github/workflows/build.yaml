@@ -8,6 +8,7 @@ on:
       - .github/workflows/build.yaml
       - flake.lock
       - '**/*.nix'
+      - '**/*.sh'
 
   pull_request:
     branches:
@@ -16,6 +17,7 @@ on:
       - .github/workflows/build.yaml
       - flake.lock
       - '**/*.nix'
+      - '**/*.sh'
 
 concurrency:
   group: >-
@@ -78,7 +80,7 @@ jobs:
           store_paths_file="$(mktemp "${RUNNER_TEMP}/store_paths_file.XXXXXX")"
           nix path-info --recursive -- "$FLAKE_ATTRIBUTE" \
             | sort -u \
-            > "$store_paths_file"
+              > "$store_paths_file"
           echo "store_paths_file=${store_paths_file}" >> "$GITHUB_ENV"
 
       - name: Secret key

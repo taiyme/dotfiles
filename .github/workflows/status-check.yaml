@@ -32,15 +32,15 @@ jobs:
         run: |
           while true; do
 
-            until checks_json="$( \
+            until checks_json="$(
               gh pr checks "$pr_number" \
                 --json bucket,name,workflow \
-                --jq 'map(select(.name != "Status Check"))' \
+                --jq 'map(select(.name != "Status Check"))'
             )"; do
               sleep 30
             done
 
-            checks_state="$(\
+            checks_state="$(
               jq -cr '
                 {
                   has_fail: any(.[]; .bucket == "fail" or .bucket == "cancel"),
@@ -50,12 +50,12 @@ jobs:
                   elif .has_pending then "pending"
                   else "done"
                   end
-              ' <<< "$checks_json" \
+              ' <<< "$checks_json"
             )"
 
             case "$checks_state" in
-              fail)    exit 1 ;;
-              done)    exit 0 ;;
+              fail) exit 1 ;;
+              done) exit 0 ;;
               pending) sleep 15 ;;
             esac
 

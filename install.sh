@@ -15,7 +15,7 @@ _info() {
 }
 
 _command_exists() {
-  command -v "$1" >/dev/null 2>&1
+  command -v "$1" > /dev/null 2>&1
 }
 
 _install_homebrew() {
@@ -44,8 +44,8 @@ _install_determinate_nix() {
 }
 
 _ensure_determinate_nix() {
-  if ! _command_exists determinate-nixd || \
-    ! _command_exists nix; then
+  if ! _command_exists determinate-nixd \
+    || ! _command_exists nix; then
     _install_determinate_nix
   fi
 

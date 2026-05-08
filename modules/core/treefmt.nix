@@ -9,6 +9,7 @@
     {
       treefmt = {
         projectRootFile = "flake.nix";
+
         programs = {
           nixfmt.enable = true;
           mdformat.enable = true;
@@ -16,6 +17,14 @@
           shellcheck.enable = true;
           actionlint.enable = true;
           zizmor.enable = true;
+        };
+
+        settings.formatter = {
+          shfmt.options = [
+            "--space-redirects"
+            "--binary-next-line"
+            "--case-indent"
+          ];
         };
       };
     };
