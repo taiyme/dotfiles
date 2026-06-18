@@ -42,6 +42,7 @@
             "inlineChat.lineNaturalLanguageHint" = false;
             "search.showLineNumbers" = true;
             "telemetry.feedback.enabled" = false;
+            "terminal.integrated.allowChords" = false;
             "terminal.integrated.cursorBlinking" = true;
             "terminal.integrated.cursorStyle" = "line";
             "terminal.integrated.fontFamily" = "HackGen Console NF";
@@ -50,7 +51,7 @@
             "terminal.integrated.shellIntegration.enabled" = false;
             "workbench.activityBar.iconClickBehavior" = "focus";
             "workbench.activityBar.location" = "top";
-            "workbench.colorTheme" = "Default Dark Modern";
+            "workbench.colorTheme" = "Dark Modern";
             "workbench.editor.closeOnFileDelete" = true;
             "workbench.editor.empty.hint" = "hidden";
             "workbench.editor.pinnedTabsOnSeparateRow" = true;
