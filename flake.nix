@@ -35,6 +35,12 @@
     #   url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # };
 
+    # TODO: nixpkgs 26.05 の VS Code が v1.123 になったら、nvim を 26.05 に戻す
+    # SEE: https://github.com/neovim/neovim/issues/38651
+    nixpkgs-nvim-v0_11_6 = {
+      url = "github:nixos/nixpkgs/fda6b0917a502c8198ef2de613dbad0efa411dca";
+    };
+
     import-tree = {
       url = "github:vic/import-tree";
     };
