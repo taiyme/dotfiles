@@ -1,6 +1,6 @@
 {
   flake.modules.darwin.base =
-    { inputs, ... }:
+    { ... }:
     {
       homebrew.enable = true;
 
