@@ -27,7 +27,7 @@
 
         # TODO: nixpkgs 26.05 の VS Code が v1.123 になったら、nvim を 26.05 に戻す
         # SEE: https://github.com/neovim/neovim/issues/38651
-        package = inputs.nixpkgs-nvim-v0_11_6.legacyPackages.${pkgs.hostPlatform.system}.neovim-unwrapped;
+        package = inputs.nixpkgs-nvim-v0_11_6.legacyPackages.${pkgs.stdenv.hostPlatform.system}.neovim-unwrapped;
 
         viAlias = true;
         vimAlias = true;
