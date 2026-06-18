@@ -7,8 +7,8 @@ readonly REPO_BRANCH="main"
 readonly DOTFILES_DIR="$HOME/.dotfiles"
 readonly FLAKE_HOST="taiy-m1mba"
 
-readonly NIXPKGS_VERSION="nixpkgs-25.11-darwin"
-readonly NIXDARWIN_VERSION="nix-darwin-25.11"
+readonly NIXPKGS_VERSION="nixpkgs-26.05-darwin"
+readonly NIXDARWIN_VERSION="nix-darwin-26.05"
 
 _info() {
   printf "\n[INFO] %s\n" "$1"
