@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.editor =
     {
+      lib,
       config,
       inputs,
       pkgs,
@@ -25,11 +26,6 @@
 
         nixpkgs.useGlobalPackages = true;
 
-        # TODO: nixpkgs 26.05 の VS Code が v1.123 になったら、nvim を 26.05 に戻す
-        # SEE: https://github.com/neovim/neovim/issues/38651
-        package =
-          inputs.nixpkgs-nvim-v0_11_6.legacyPackages.${pkgs.stdenv.hostPlatform.system}.neovim-unwrapped;
-
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
@@ -49,6 +45,12 @@
             flavour = config.catppuccin.flavor or "mocha";
           };
         };
+      }
+      # TODO: nixpkgs 26.05 の VS Code が v1.123 になったら、nvim を 26.05 に戻す
+      # SEE: https://github.com/neovim/neovim/issues/38651
+      // lib.optionalAttrs (lib.versionOlder pkgs.vscode.version "1.123") {
+        package =
+          inputs.nixpkgs-nvim-v0_11_6.legacyPackages.${pkgs.stdenv.hostPlatform.system}.neovim-unwrapped;
       };
     };
 }
