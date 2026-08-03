@@ -11,7 +11,9 @@ readonly NIXPKGS_VERSION="nixpkgs-26.05-darwin"
 readonly NIXDARWIN_VERSION="nix-darwin-26.05"
 
 _info() {
-  printf "\n[INFO] %s\n" "$1"
+  printf '\n\n[INFO] -----------------------------------------'
+  printf "\n %s" "$1"
+  printf '\n------------------------------------------------\n'
 }
 
 _command_exists() {
