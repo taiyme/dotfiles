@@ -1,0 +1,57 @@
+name: Test (install.sh)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/test-install.yaml
+      - install.sh
+      - flake.lock
+      - '**/*.nix'
+      - '**/*.sh'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/test-install.yaml
+      - install.sh
+      - flake.lock
+      - '**/*.nix'
+      - '**/*.sh'
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-
+    ${{ github.event.pull_request.head.repo.full_name || github.repository }}-
+    ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  test-install:
+    name: Test (install.sh)
+    runs-on: macos-15
+    timeout-minutes: 360
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@2a0be2498974c2b6327e19780488744384637d88 # v3.21.7
+        with:
+          extra-conf: |
+            extra-substituters = https://nix-cache.taiy.me
+            extra-trusted-substituters = https://nix-cache.taiy.me
+            extra-trusted-public-keys = nix-cache.taiy.me:Wv1ThvtQj0/bCIgCGYqWgRb49VGUuFmWtpUcc8Oqi+E=
+
+      - name: Run install.sh
+        run: |
+          bash ./install.sh
