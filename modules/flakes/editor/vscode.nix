@@ -72,6 +72,25 @@
             "redhat.telemetry.enabled" = false;
             "typescript.updateImportsOnFileMove.enabled" = "never";
             "vue.updateImportsOnFileMove.enabled" = false;
+            "json.schemaDownload.trustedDomains" =
+              let
+                trustedDomains = [
+                  "https://schemastore.azurewebsites.net/"
+                  "https://raw.githubusercontent.com/microsoft/vscode/"
+                  "https://raw.githubusercontent.com/devcontainers/spec/"
+                  "https://www.schemastore.org/"
+                  "https://json.schemastore.org/"
+                  "https://json-schema.org/"
+                  "https://developer.microsoft.com/json-schemas/"
+                  "https://raw.githubusercontent.com/DavidAnson/markdownlint/"
+                ];
+              in
+              builtins.listToAttrs (
+                map (name: {
+                  inherit name;
+                  value = true;
+                }) trustedDomains
+              );
           };
         };
       };
