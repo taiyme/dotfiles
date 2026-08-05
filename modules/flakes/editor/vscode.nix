@@ -68,9 +68,8 @@
               repositories = true;
               worktrees = true;
             };
-            "javascript.updateImportsOnFileMove.enabled" = "never";
+            "js/ts.updateImportsOnFileMove.enabled" = "never";
             "redhat.telemetry.enabled" = false;
-            "typescript.updateImportsOnFileMove.enabled" = "never";
             "vue.updateImportsOnFileMove.enabled" = false;
             "json.schemaDownload.trustedDomains" =
               let
