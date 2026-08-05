@@ -71,25 +71,30 @@
             "js/ts.updateImportsOnFileMove.enabled" = "never";
             "redhat.telemetry.enabled" = false;
             "vue.updateImportsOnFileMove.enabled" = false;
-            "json.schemaDownload.trustedDomains" =
-              let
-                trustedDomains = [
-                  "https://schemastore.azurewebsites.net/"
-                  "https://raw.githubusercontent.com/microsoft/vscode/"
-                  "https://raw.githubusercontent.com/devcontainers/spec/"
-                  "https://www.schemastore.org/"
-                  "https://json.schemastore.org/"
-                  "https://json-schema.org/"
-                  "https://developer.microsoft.com/json-schemas/"
-                  "https://raw.githubusercontent.com/DavidAnson/markdownlint/"
-                ];
-              in
-              builtins.listToAttrs (
-                map (name: {
-                  inherit name;
-                  value = true;
-                }) trustedDomains
-              );
+            "json.schemaDownload.trustedDomains" = {
+              "*" = true;
+            };
+            # NOTE: いちいち追加していくのはしんどい
+            # "json.schemaDownload.trustedDomains" =
+            #   let
+            #     trustedDomains = [
+            #       "https://schemastore.azurewebsites.net/"
+            #       "https://raw.githubusercontent.com/microsoft/vscode/"
+            #       "https://raw.githubusercontent.com/devcontainers/spec/"
+            #       "https://www.schemastore.org/"
+            #       "https://json.schemastore.org/"
+            #       "https://json-schema.org/"
+            #       "https://developer.microsoft.com/json-schemas/"
+            #       "https://raw.githubusercontent.com/DavidAnson/markdownlint/"
+            #       "https://docs.renovatebot.com/renovate-schema.json"
+            #     ];
+            #   in
+            #   builtins.listToAttrs (
+            #     map (name: {
+            #       inherit name;
+            #       value = true;
+            #     }) trustedDomains
+            #   );
           };
         };
       };
